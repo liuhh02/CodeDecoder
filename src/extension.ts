@@ -16,8 +16,18 @@ export function activate(context: vscode.ExtensionContext) {
 	let disposable = vscode.commands.registerCommand('codedecoder.helloWorld', () => {
 		// The code you place here will be executed every time your command is executed
 
+		const editor = vscode.window.activeTextEditor;
+		if (!editor) {
+			return;
+		}
+
+		const document = editor.document;
+		const selection = editor.selection;
+
+		let code = document.getText(selection);
+
 		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from CodeDecoder!');
+		vscode.window.showInformationMessage(code);
 	});
 
 	context.subscriptions.push(disposable);

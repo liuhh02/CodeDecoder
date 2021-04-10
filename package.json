@@ -19,7 +19,16 @@
 				"command": "codedecoder.helloWorld",
 				"title": "Hello World"
 			}
-		]
+		],
+		"menus": {
+			"editor/context": [
+				{
+					"when": "editorHasSelection",
+					"command": "codedecoder.helloWorld",
+					"group": "9_cutcopypaste"
+				}
+			]
+		}
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
