@@ -1,9 +1,13 @@
-def sum(x, y):
-    return x + y
-
 def abs_value(x):
     if (x > 0) return x
     return -x
 
 def greet(name):
-    print(f"Hello {name}, how are you?")
+    print("Hello, " + name + ". Good morning!")
+
+def youngest(age1, age2, age3):
+    age = min(age1, age2, age3)
+    print("The youngest age is " + age)
+
+def power(num, exponent):
+    return num**exponent 
