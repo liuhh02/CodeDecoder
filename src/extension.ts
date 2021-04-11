@@ -32,7 +32,7 @@ export function activate(context: vscode.ExtensionContext) {
 			'Content-Type': 'application/json'
 		};
 
-		axios.post("", { code: code }, {
+		axios.post("http://b631c1d73e70.ngrok.io", { code: code }, {
 			headers: headers
 		}).then(function (response) {
 			if (editor) {
