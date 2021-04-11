@@ -44,7 +44,7 @@ export function activate(context: vscode.ExtensionContext) {
 		})
 
 		// Display a message box to the user
-		vscode.window.showInformationMessage(code);
+		// vscode.window.showInformationMessage(code);
 	});
 
 	context.subscriptions.push(disposable);
