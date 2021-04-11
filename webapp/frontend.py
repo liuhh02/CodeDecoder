@@ -9,31 +9,31 @@ from io import StringIO
 Language.build_library('build/my-languages.so', ['tree-sitter-python', 'tree-sitter-go', 'tree-sitter-javascript', 'tree-sitter-java'])
 
 def build_parser(language):
-  LANGUAGE = Language('build/my-languages.so', language)
-  parser = Parser()
-  parser.set_language(LANGUAGE)
-  return parser
+    LANGUAGE = Language('build/my-languages.so', language)
+    parser = Parser()
+    parser.set_language(LANGUAGE)
+    return parser
 
 def get_string_from_code(node, lines, code_list):
-	line_start = node.start_point[0]
-	line_end = node.end_point[0]
-	char_start = node.start_point[1]
-	char_end = node.end_point[1]
-	if line_start != line_end:
-		code_list.append(' '.join([lines[line_start][char_start:]] + lines[line_start+1:line_end] + [lines[line_end][:char_end]]))
-	else:
-		code_list.append(lines[line_start][char_start:char_end])
+    line_start = node.start_point[0]
+    line_end = node.end_point[0]
+    char_start = node.start_point[1]
+    char_end = node.end_point[1]
+    if line_start != line_end:
+	code_list.append(' '.join([lines[line_start][char_start:]] + lines[line_start+1:line_end] + [lines[line_end][:char_end]]))
+    else:
+	code_list.append(lines[line_start][char_start:char_end])
 
 def my_traverse(code, node, code_list):
-	lines = code.split('\n')
-	if node.child_count == 0:
-		get_string_from_code(node, lines, code_list)
-	elif node.type == 'string':
-		get_string_from_code(node, lines, code_list)
-	else:
-		for n in node.children:
-			my_traverse(code, n, code_list)
-	return ' '.join(code_list)
+    lines = code.split('\n')
+    if node.child_count == 0:
+	get_string_from_code(node, lines, code_list)
+    elif node.type == 'string':
+	get_string_from_code(node, lines, code_list)
+    else:
+	for n in node.children:
+	    my_traverse(code, n, code_list)
+    return ' '.join(code_list)
 
 def get_binary_file_downloader_html(bin_file, file_label='File'):
     with open(bin_file, 'rb') as f:
@@ -44,16 +44,16 @@ def get_binary_file_downloader_html(bin_file, file_label='File'):
 
 @st.cache(allow_output_mutation=True)
 def loadmodel(name):
-	device = torch.device("cuda")
-	model = AutoModelWithLMHead.from_pretrained(name)
-	model.to(device)
-	tokenizer = AutoTokenizer.from_pretrained(name, skip_special_tokens=True)
-	return (model, tokenizer)
+    device = torch.device("cuda")
+    model = AutoModelWithLMHead.from_pretrained(name)
+    model.to(device)
+    tokenizer = AutoTokenizer.from_pretrained(name, skip_special_tokens=True)
+    return (model, tokenizer)
 
 st.set_page_config(page_title="CodeDecoder", page_icon="💻", layout="wide")
 
 def main():
-	st.title('Code Decoder')
+    st.title('Code Decoder')
     language = st.sidebar.selectbox('Choose Language', ('Python', 'Java', 'Javascript', 'Go'))
     format = st.selectbox('Upload or Paste your code over', ('Upload', 'Paste'))
     if language == 'Python':
