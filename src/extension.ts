@@ -1,5 +1,6 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
+import axios from 'axios';
 import * as vscode from 'vscode';
 
 // this method is called when your extension is activated
@@ -25,6 +26,22 @@ export function activate(context: vscode.ExtensionContext) {
 		const selection = editor.selection;
 
 		let code = document.getText(selection);
+
+		const headers = {
+			// eslint-disable-next-line @typescript-eslint/naming-convention
+			'Content-Type': 'application/json'
+		};
+
+		axios.post("", { code: code }, {
+			headers: headers
+		}).then(function (response) {
+			if (editor) {
+				editor.edit(editBuilder => {
+					editBuilder.insert(selection.start, "# " + response.data + "\n");
+				})
+			}
+			vscode.window.showInformationMessage(response.data);
+		})
 
 		// Display a message box to the user
 		vscode.window.showInformationMessage(code);
